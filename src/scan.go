@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"math"
 	"os"
 	"os/signal"
 	"syscall"
@@ -59,11 +60,15 @@ func main() {
 					continue
 				}
 				seen[addr] = true
+
+				n := 2.0
+				distance := math.Pow(10, float64(int16(tx)-device.RSSI)/(10*n))
 				fmt.Printf("UUID: %s\n", uuid)
 				fmt.Printf("Major Value: %d\n", major)
 				fmt.Printf("Minor Value: %d\n", minor)
 				fmt.Printf("TX Power Value: %d dBm\n", tx)
 				fmt.Printf("RSSI (Received Signal Strength Indication): %d dBm\n", device.RSSI)
+				fmt.Printf("Approximate Distance: %.2f meters\n", distance)
 				fmt.Printf("MAC Address: %s\n", addr)
 			}
 		}
